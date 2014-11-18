@@ -1,7 +1,7 @@
 --
 -- DbNinja v3.2.6 for MySQL
 --
--- Dump date: 2014-11-18 01:36:45 (UTC)
+-- Dump date: 2014-11-18 01:48:09 (UTC)
 -- Server version: 5.5.40-0ubuntu0.14.04.1
 -- Database: kbesta_forge
 --
@@ -84,6 +84,7 @@ CREATE TABLE `user` (
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `salt` varchar(50) NOT NULL COMMENT 'some random string, md5 the timestamp or something idk',
   `password` varchar(50) NOT NULL COMMENT 'sha1sum of actual password',
   `atid` int(10) unsigned NOT NULL COMMENT 'account type id',
   PRIMARY KEY (`uid`),
@@ -152,20 +153,20 @@ COMMIT;
 LOCK TABLES `user` WRITE;
 ALTER TABLE `user` DISABLE KEYS;
 
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (1,'Kevin','Besta','kbesta','675130deeceaa6353f4eb789c1a865978c782ecd',3);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (2,'Lindsey','Rauch','lrauch','2bfb751c2e65b7e2881f2cde222ac5312763f662',3);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (3,'Ken','Martinson','kmartinson','74f3f11164a253e3900e188d65e7647c0e068728',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (4,'Tony','Gallone','tgallone','da21494f081e1bba9c217c7521094db433ff6559',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (5,'Caitlin','Samuelsson','csamuelsson','4fe89dbd20966efeec7e8fd0a2a8f3c700e1c4eb',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (6,'Emily','Falder','efalder','215e32f308a04762a1ddfd0be29e97254e778364',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (7,'Jan','Kubal','jkubal','4ec904f08da8421654c3d0a4a116b516712d4495',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (8,'Sam','Lunn','slunn','c86141866b0eecfea0788e1cfe3185ba5d348844',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (9,'Devon','Mond','dmond','1a4e36accb342734565c4149fe2079ce28fbb98a',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (10,'Nick','Vallee','nvallee','8a83b1714b48cd856a3b524f15e0db7219c27019',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (11,'John','Hall','jhall','530dc1679f4341b986133e54a4782f5214fa7ccd',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (12,'Alec','Hume','ahume','5a2d2be73a4a3b7348ae1e372c4d6cb33b079a44',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (13,'Abdul','Alenazi','aalenazi','3822ccb8c8dae6c2b27bf6618e5305458b986025',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (14,'Dave','Grant','dgrant','9c9ab6d4e69ecfa40f553b5d0c0b64892cd3c207',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (1,'Kevin','Besta','kbesta',' aejhus46yrkrejtsertjewas5jtathaetrhnae6iut4','90ebd14f6da0e6c5ffb00a1b02bbad5db9483ed6',3);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (2,'Lindsey','Rauch','lrauch','awe5k636kla2j6w3hqjpwgo3uriaygvbaeiln\\rvby\\il j\\ba','4eaf6d1bdb115810f5ec22a4b551794df0c6e6b7',3);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (3,'Ken','Martinson','kmartinson',';alsiuernlobzsvinmfalskun;bzornzylsoe8nrf','1b39a289370ca56dcce4d1f76f654f76cf748753',2);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (4,'Tony','Gallone','tgallone','aseibtunal\\rwubpoerimca;wo3imvawp4ert','5b3c5fe08338e0ff28937ab9fb26674eea4f89b8',2);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (5,'Caitlin','Samuelsson','csamuelsson','a;lsdritnzilvsynroQCIHNASELKUVQYBWIYNUV\\AFJI','0f415fc58de55ddec6b94b2322c157a5fae754c2',2);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (6,'Emily','Falder','efalder','ASLIIIIEWHYCR\\LAIymr5awli34rt','f01db910d4cbaca8b9c94c31d5423d6d5edf46f5',2);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (7,'Jan','Kubal','jkubal','aicusevnltrausynchIAUvnlsasasasasasasasasasasasakr','731638a0ef323a07bd6874cd2e4843769216fd90',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (8,'Sam','Lunn','slunn','awliegnyvuzasumwpoenayuvsrueine;a','1cef616b3cf95ee95339f7115604df1124b9487d',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (9,'Devon','Mond','dmond','asoif9eybalswkiejfai8wtbuvafm;ajg','a8f7da7071de46b40ed56cd8192377f4cfeba175',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (10,'Nick','Vallee','nvallee','h\\awjicoemrf\\iuaservownt;rvsoiajgo;a','6c48c6adba434360a59da40bc7c28396a00a9671',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (11,'John','Hall','jhall','la;sfeval;ksuhef laswetvob;aw87r;ib;askdjf','e4d6181e60d6e0a954dae500567e3c90b51fb175',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (12,'Alec','Hume','ahume','asklf;h\\asldfjbaw;oeryfgu\\;dso87fgl\\atg/awrbgw','6df96c8bbdd6e1271cb129aef17a259fd6a9e305',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (13,'Abdul','Alenazi','aalenazi','aslvjhawe;lrijbz;osdn\';sdetnsetnjwesatnh','722ca7df36e795815c2b7b9e83c9f245ac1fbbc7',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (14,'Dave','Grant','dgrant','awjtjkasetybaeryjkejgasejste','1e56ab26bd8a55d304e2b7b47f708ae45b1d54e7',1);
 
 ALTER TABLE `user` ENABLE KEYS;
 UNLOCK TABLES;
