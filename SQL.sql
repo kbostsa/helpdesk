@@ -1,7 +1,7 @@
 --
 -- DbNinja v3.2.6 for MySQL
 --
--- Dump date: 2014-11-18 01:36:45 (UTC)
+-- Dump date: 2014-11-18 01:45:07 (UTC)
 -- Server version: 5.5.40-0ubuntu0.14.04.1
 -- Database: kbesta_forge
 --
@@ -15,7 +15,6 @@
 /*!40101 SET NAMES utf8 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 
-DROP DATABASE IF EXISTS `kbesta_forge`;
 CREATE DATABASE `kbesta_forge` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `kbesta_forge`;
@@ -84,6 +83,7 @@ CREATE TABLE `user` (
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `salt` varchar(50) NOT NULL COMMENT 'some random string, md5 the timestamp or something idk',
   `password` varchar(50) NOT NULL COMMENT 'sha1sum of actual password',
   `atid` int(10) unsigned NOT NULL COMMENT 'account type id',
   PRIMARY KEY (`uid`),
@@ -98,9 +98,7 @@ CREATE TABLE `user` (
 LOCK TABLES `account_type` WRITE;
 ALTER TABLE `account_type` DISABLE KEYS;
 
-INSERT INTO `account_type` (`atid`,`description`) VALUES (1,'User');
-INSERT INTO `account_type` (`atid`,`description`) VALUES (2,'Technician');
-INSERT INTO `account_type` (`atid`,`description`) VALUES (3,'Administrator');
+INSERT INTO `account_type` (`atid`,`description`) VALUES (1,'User'),(2,'Technician'),(3,'Administrator');
 
 ALTER TABLE `account_type` ENABLE KEYS;
 UNLOCK TABLES;
@@ -124,11 +122,7 @@ COMMIT;
 LOCK TABLES `status` WRITE;
 ALTER TABLE `status` DISABLE KEYS;
 
-INSERT INTO `status` (`sid`,`description`) VALUES (1,'New (unassigned)');
-INSERT INTO `status` (`sid`,`description`) VALUES (2,'In Progress');
-INSERT INTO `status` (`sid`,`description`) VALUES (3,'Completed');
-INSERT INTO `status` (`sid`,`description`) VALUES (4,'Cancelled by originator');
-INSERT INTO `status` (`sid`,`description`) VALUES (5,'Stalled/Waiting');
+INSERT INTO `status` (`sid`,`description`) VALUES (1,'New (unassigned)'),(2,'In Progress'),(3,'Completed'),(4,'Cancelled by originator'),(5,'Stalled/Waiting');
 
 ALTER TABLE `status` ENABLE KEYS;
 UNLOCK TABLES;
@@ -152,20 +146,7 @@ COMMIT;
 LOCK TABLES `user` WRITE;
 ALTER TABLE `user` DISABLE KEYS;
 
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (1,'Kevin','Besta','kbesta','675130deeceaa6353f4eb789c1a865978c782ecd',3);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (2,'Lindsey','Rauch','lrauch','2bfb751c2e65b7e2881f2cde222ac5312763f662',3);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (3,'Ken','Martinson','kmartinson','74f3f11164a253e3900e188d65e7647c0e068728',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (4,'Tony','Gallone','tgallone','da21494f081e1bba9c217c7521094db433ff6559',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (5,'Caitlin','Samuelsson','csamuelsson','4fe89dbd20966efeec7e8fd0a2a8f3c700e1c4eb',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (6,'Emily','Falder','efalder','215e32f308a04762a1ddfd0be29e97254e778364',2);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (7,'Jan','Kubal','jkubal','4ec904f08da8421654c3d0a4a116b516712d4495',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (8,'Sam','Lunn','slunn','c86141866b0eecfea0788e1cfe3185ba5d348844',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (9,'Devon','Mond','dmond','1a4e36accb342734565c4149fe2079ce28fbb98a',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (10,'Nick','Vallee','nvallee','8a83b1714b48cd856a3b524f15e0db7219c27019',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (11,'John','Hall','jhall','530dc1679f4341b986133e54a4782f5214fa7ccd',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (12,'Alec','Hume','ahume','5a2d2be73a4a3b7348ae1e372c4d6cb33b079a44',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (13,'Abdul','Alenazi','aalenazi','3822ccb8c8dae6c2b27bf6618e5305458b986025',1);
-INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`password`,`atid`) VALUES (14,'Dave','Grant','dgrant','9c9ab6d4e69ecfa40f553b5d0c0b64892cd3c207',1);
+INSERT INTO `user` (`uid`,`first_name`,`last_name`,`username`,`salt`,`password`,`atid`) VALUES (1,'Kevin','Besta','kbesta','','675130deeceaa6353f4eb789c1a865978c782ecd',3),(2,'Lindsey','Rauch','lrauch','','2bfb751c2e65b7e2881f2cde222ac5312763f662',3),(3,'Ken','Martinson','kmartinson','','74f3f11164a253e3900e188d65e7647c0e068728',2),(4,'Tony','Gallone','tgallone','','da21494f081e1bba9c217c7521094db433ff6559',2),(5,'Caitlin','Samuelsson','csamuelsson','','4fe89dbd20966efeec7e8fd0a2a8f3c700e1c4eb',2),(6,'Emily','Falder','efalder','','215e32f308a04762a1ddfd0be29e97254e778364',2),(7,'Jan','Kubal','jkubal','','4ec904f08da8421654c3d0a4a116b516712d4495',1),(8,'Sam','Lunn','slunn','','c86141866b0eecfea0788e1cfe3185ba5d348844',1),(9,'Devon','Mond','dmond','','1a4e36accb342734565c4149fe2079ce28fbb98a',1),(10,'Nick','Vallee','nvallee','','8a83b1714b48cd856a3b524f15e0db7219c27019',1),(11,'John','Hall','jhall','','530dc1679f4341b986133e54a4782f5214fa7ccd',1),(12,'Alec','Hume','ahume','','5a2d2be73a4a3b7348ae1e372c4d6cb33b079a44',1),(13,'Abdul','Alenazi','aalenazi','','3822ccb8c8dae6c2b27bf6618e5305458b986025',1),(14,'Dave','Grant','dgrant','','9c9ab6d4e69ecfa40f553b5d0c0b64892cd3c207',1);
 
 ALTER TABLE `user` ENABLE KEYS;
 UNLOCK TABLES;
