@@ -33,26 +33,44 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
-	if (Auth::guest())
-	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::guest('login');
-		}
-	}
-});
+//Route::filter('auth', function()
+//{
+//	if (Auth::guest())
+//	{
+//		if (Request::ajax())
+//		{
+//			return Response::make('Unauthorized', 401);
+//		}
+//		else
+//		{
+//			return Redirect::guest('login');
+//		}
+//	}
+//});
+//
+//
+//Route::filter('auth.basic', function()
+//{
+//	return Auth::basic();
+//});
 
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+Route::filter('secure', function() {
+    if (!Session::has('authenticated') || Session::get('authenticated') == false) {
+        return Redirect::to('/login');
+    }
 });
+Route::when('secure/*', 'secure');
+
+Route::filter('admin', function() {
+        if (!Session::has('authenticated') || Session::get('authenticated') == false) {
+            return Redirect::to('/login');
+        }else{
+            if(Session::get('user')->atid != '3'){
+                throw new AccessDeniedException("You are not an administrator.");
+            }
+        }
+});
+Route::when('admin/*', 'admin');
 
 /*
 |--------------------------------------------------------------------------
@@ -65,10 +83,10 @@ Route::filter('auth.basic', function()
 |
 */
 
-Route::filter('guest', function()
-{
-	if (Auth::check()) return Redirect::to('/');
-});
+//Route::filter('guest', function()
+//{
+//	if (Auth::check()) return Redirect::to('/');
+//});
 
 /*
 |--------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', 'HelpDeskController@indexAction');
+Route::get('/login', 'HelpDeskController@loginAction');
+Route::post('/login', 'HelpDeskController@loginCheckAction');
+Route::get('/secure/main', 'HelpDeskController@mainAction');
