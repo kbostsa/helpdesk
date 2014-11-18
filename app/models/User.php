@@ -4,9 +4,9 @@ class User extends Eloquent {
     protected $table = 'user';
     public $timestamps = false;
     public function checkPassword($clear) {
-        return sha1($clear) == $this->password;
+        return sha1($clear.$this->salt) == $this->password;
     }
     public function hashPassword($clear) {
-        return sha1($clear);
+        return sha1($clear.$this->salt);
     }
 }
